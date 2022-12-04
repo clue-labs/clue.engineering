@@ -1,3 +1,6 @@
+comma:=,
+space:=$(eval) $(eval)
+
 build: vendor www/src/tailwind.min.css
 	vendor/bin/sculpin generate
 
@@ -5,8 +8,8 @@ vendor: composer.json composer.lock
 	composer install
 	touch $@
 
-www/src/tailwind.min.css: www/_layouts/* www/_posts/* www/_talks/* www/*.html www/*.html.twig tailwindcss tailwind.config.js
-	./tailwindcss -o $@ --minify
+www/src/tailwind.min.css: www/_layouts/* www/_posts/* www/_talks/* www/*.html www/*.html.twig tailwindcss
+	./tailwindcss -o $@ --minify --content "$(subst $(space),$(comma),$(filter-out $(lastword $^), $^))"
 	touch $@
 
 tailwindcss:
