@@ -8,7 +8,7 @@ vendor: composer.json composer.lock
 	composer install
 	touch $@
 
-www/src/tailwind.min.css: www/_layouts/* www/_posts/* www/_talks/* www/*.html www/*.html.twig tailwindcss
+www/src/tailwind.min.css: build www/_layouts/* www/_posts/* www/_talks/* www/*.html www/*.html.twig tailwindcss
 	./tailwindcss -o $@ --minify --content "$(subst $(space),$(comma),$(filter-out $(lastword $^), $^))"
 	touch $@
 
